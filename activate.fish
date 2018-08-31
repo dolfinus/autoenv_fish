@@ -4,8 +4,12 @@ set AUTOENV_AUTH_FILE ~/.autoenv_authorized
 if [ -z "$AUTOENV_ENV_FILENAME" ]
     set AUTOENV_ENV_FILENAME ".env"
 end
+if [ -z "$AUTOENV_ENV_LEAVE_FILENAME" ]
+    set AUTOENV_ENV_LEAVE_FILENAME ".env.leave"
+end
 
 function autoenv_init
+
   set defIFS $IFS
   set IFS (echo -en "\n\b")
 
@@ -31,6 +35,13 @@ function autoenv_init
   end
 
   set IFS $defIFS
+end
+
+function autoenv_leave
+  if string match -q "$AUTOENV_ENABLE_LEAVE" "1"
+    set target_file $argv[1]/$AUTOENV_ENV_LEAVE_FILENAME
+    [ -f $target_file ]; and autoenv_check_authz_and_run "$target_file"
+  end
 end
 
 function autoenv_run
@@ -114,7 +125,10 @@ function autoenv_source
 end
 
 function autoenv_cd
+  set prev_dir $PWD
+
   if builtin cd "$argv"
+    autoenv_leave $prev_dir
     autoenv_init
     return 0
   else
