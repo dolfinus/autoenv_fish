@@ -2,10 +2,10 @@
 
 set AUTOENV_AUTH_FILE ~/.autoenv_authorized
 if [ -z "$AUTOENV_ENV_FILENAME" ]
-    set AUTOENV_ENV_FILENAME ".env"
+    set AUTOENV_ENV_FILENAME ".env.fish"
 end
 if [ -z "$AUTOENV_ENV_LEAVE_FILENAME" ]
-    set AUTOENV_ENV_LEAVE_FILENAME ".env.leave"
+    set AUTOENV_ENV_LEAVE_FILENAME ".env.leave.fish"
 end
 
 function autoenv_init

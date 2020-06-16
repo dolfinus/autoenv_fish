@@ -2,21 +2,25 @@
 
 [Autoenv](https://github.com/kennethreitz/autoenv) magic for [fish shell](https://fishshell.com)!
 
-Please note that this project is intended to make autoenv available for fish shell users, this basically means that this version will always be a bit behind the main project. Any bugs, bugfixes and contributions are very much appreciated, but keep in mind that any feature requests (unless strictly fish-related) should be posted [here](https://github.com/kennethreitz/autoenv/issues).
-
 ## Installation
 
-To install it, just copy activate.fish somewhere to your computer and source it by typing the following in terminal:
+To install it, just copy autoenv.fish somewhere to your computer and source it by typing the following in terminal:
 
-	source <path/to/script>/activate.fish
+```bash
+source <path/to/script>/autoenv.fish
+```
 
 If you want to have autoenv always enabled, add the previous line to your fish config file (~/.config/fish/config.fish).
 
+## Usage
+When you `cd` to some directory where `.env.fish` file is stored, it'll be executed automatically.
 
-### Homebrew
+If env variable `AUTOENV_ENABLE_LEAVE=1` is set, `.env.leave.fish` script is being executed then leaving the directory.
 
-This formula is not in the core homebrew, but if you prefer to use it (to get automatic updates, for example) you can use this tap (see the code [here](https://github.com/loopbit/homebrew-tap)):
+## But why?
+For example, this can be used for automatic activating and deactivating Python's virtualenv:
 
-	brew tap loopbit/tap
-	brew install autoenv_fish
-
+* If there is a `venv` directory in a folder you're entering, `activate` binary will be executed automatically which leads to entering into virtual environment.
+* When you are moving within the same folder or child folders, nothing happens.
+* When you go outside of this folder, for example one level up or to totally different dir, `deactivate` function is called to exit from virtual environment.
+* If there is no `venv` dir, nothing is happenned.
